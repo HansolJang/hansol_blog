@@ -39,7 +39,7 @@
   </script>
 </head>
 <body>
-<h1>blog</h1>
+<div id="header">
 <% if(!user_id) { %>
 <form action="/user/login" method="post" id="joinform">
   <input type="text" placeholder="id" size="12" name="user_id" id="user_id" style="float: left;">
@@ -57,11 +57,15 @@
   <input type="submit" id="btnwithdraw" value="탈퇴">
 </form>
 <br>
+</div> <!--header-->
+
+<h1>blog</h1>
 
 <div style="float: none">
+  <h3>write post!</h3>
   <form action="/post/write" method="post" id="writeform">
-    <input type="text" placeholder="title" id="post_title" size="100" name="post_title">
-    <input type="text" placeholder="fill out your post!" id="post_content" size="100" name="post_content">
+    <input type="text" placeholder="title" id="post_title" size="100" name="post_title"><br>
+    <textarea placeholder="fill out your post!" id="post_content" name="post_content" cols="100" rows="10"></textarea>
     <input type="submit" id="btnpost" value="write">
   </form>
 </div>
@@ -69,38 +73,33 @@
 
 
 
+
 <div id="content">
-
-
-
-
-
-
 <%
 for(var i = 0, len = data.length; i < len, item = data[i]; i++) {
 %>
-<% if ( i%2 == 1) {%>
-<div class="odd">
-  <p
-  <h2><a href="/board/read/<%=page%>/<%=item.num%>"><%= item.title %></a></h2>
-  <p></p>
+  <% if ( i%2 == 1) {%>
+  <div class="odd">
+    <p><%=item.post_date%></p>
+    <h2><a href="/post/read/<%=page%>/<%=item.post_no%>"><%= item.post_title %></a></h2>
+    <p><%=item.user_id%></p>
+    <p><%=item.post_content%></p>
+  </div>
+  <hr>
 
-</div>
-<tr>
-  <td width="5%"><%= max - i %></td>
-  <td width="55%"></td>
-  <td><%= item.id %></td>
-  <td width="25%"><%= item.regdate %></td>
-  <td width="5%"><%= item.hit %></td>
-</tr>
-<% } else { %>
-<div class="even">
-  <h2></h2>
-  <p></p>
-</div>
-<% }
-} %>
+  <% } else { %>
+  <div class="even">
+    <p><%=item.post_date%></p>
+    <h2><a href="/post/read/<%=page%>/<%=item.post_no%>"><%= item.post_title %></a></h2>
+    <p><%=item.user_id%></p>
+    <p><%=item.post_content%></p>
+  </div>
+  <hr>
+  <% } %>
+<% } %>
 </div>  <!-- content -->
 
 </body>
 </html>
+
+

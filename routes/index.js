@@ -12,6 +12,7 @@ router.get('/:page', function (req, res, next) {
 
     db_post.list(data, function(datas) {
         console.log('datas',datas);
+        res.render('main' ,datas);
     });
     //db_user.getno([user_id], function(user_no) {
     //    if(user_no != undefined) {

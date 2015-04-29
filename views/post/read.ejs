@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css'/>
+
+</head>
+<body>
+<div id="content">
+  <p><%=data.post_date%></p>
+  <h2><%= data.post_title %></h2>
+  <p><%=data.user_id%></p>
+  <p><%=data.post_content%></p>
+
+  <% if (user_id == data.user_id) { %>
+  <form action="/post/delete" method="post" id="deleteform">
+    <input type="hidden" name="post_no" value="<%= data.post_no %>">
+    <input type="hidden" name="page" value="<%= page %>">
+    <input type="submit" id="btndelete" value="삭제">
+  </form>
+  <% } %>
+</div>
+</body>
+</html>

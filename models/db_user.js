@@ -85,3 +85,14 @@ exports.withdraw = function(data, callback) {
         });
     });
 };
+
+/*
+ CREATE TABLE `user` (
+ `user_no` INT(11) NOT NULL AUTO_INCREMENT,
+ `user_id` VARCHAR(20) NOT NULL,
+ `user_pw` VARCHAR(20) NOT NULL,
+ `user_withdraw` INT(11) NOT NULL DEFAULT '0',
+ PRIMARY KEY (`user_no`),
+ UNIQUE INDEX `user_id` (`user_id`)
+ )
+ */
