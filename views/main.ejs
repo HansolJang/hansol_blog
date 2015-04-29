@@ -67,22 +67,40 @@
 </div>
 <% } %>
 
+
+
+<div id="content">
+
+
+
+
+
+
 <%
 for(var i = 0, len = data.length; i < len, item = data[i]; i++) {
 %>
 <% if ( i%2 == 1) {%>
+<div class="odd">
+  <p
+  <h2><a href="/board/read/<%=page%>/<%=item.num%>"><%= item.title %></a></h2>
+  <p></p>
+
+</div>
 <tr>
   <td width="5%"><%= max - i %></td>
-  <td width="55%"><a href="/board/read/<%=page%>/<%=item.num%>"><%= item.title %></a></td>
+  <td width="55%"></td>
   <td><%= item.id %></td>
   <td width="25%"><%= item.regdate %></td>
   <td width="5%"><%= item.hit %></td>
 </tr>
 <% } else { %>
-
+<div class="even">
+  <h2></h2>
+  <p></p>
+</div>
 <% }
 } %>
-
+</div>  <!-- content -->
 
 </body>
 </html>

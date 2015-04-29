@@ -37,7 +37,7 @@ exports.list = function (data, callback) {
             if (endPage > totalPage) endPage = totalPage;    //마지막의 경우 없는 페이지까지 나오면 안됨
             var max = cnt - ((page - 1) * size);          //페이지에 뿌려줄 시작 글번호 (123,122,121...--)
 
-            conn.query("select post_no, post_title, post_content, DATE_FORMAT(post_date, '%Y-%m-%d') post_date, user_no from post order by post_no desc limit ?, ?",
+            conn.query("select post_no, post_title, post_content, DATE_FORMAT(post_date, '%Y-%m-%d') post_date, (select user_id from user where user_no=?)as user_id from post order by post_no desc limit ?, ?",
                 [begin, size], function (err, rows) {
                     if (err) console.error('err', err);
                     //console.log('rows', rows);
@@ -59,11 +59,14 @@ exports.list = function (data, callback) {
     });
 };
 
+//select post_no, post_title, post_content, post_date,
+//    (select user_id from user b where b.user_no = a.user_no) as user_id from post a order by post_no desc
+
 exports.read = function (num, callback) {
     pool.getConnection(function (err, conn) {
         if (err) console.err('err', err);
         //내용 가져오기
-        conn.query('select post_no, post_title, post_content, DATE_FORMAT(regdate, "%Y-%m-%d %H:%i:%s") post_date, user_no from board where num=?',
+        conn.query('select post_no, post_title, post_content, DATE_FORMAT(regdate, "%Y-%m-%d %H:%i:%s") post_date, (select user_id from user b where b.user_no = a.user_no) as user_id from post a order by post_no desc',
             [num], function (err, rows) {
                 if (err) console.err('err', err);
                 conn.release();
