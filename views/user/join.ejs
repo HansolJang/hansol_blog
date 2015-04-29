@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script>
+    $(function(){
+      $("#btnjoin").click(function(){
+        if($("#user_id").val() == "") {
+          alert('id blank!');
+          $("#user_id").focus();
+          return; //return 해야 페이지 초기화 안됨
+        }
+        else if($("#user_pw").val() == "") {
+          alert('password blank!');
+          $("#user_pw").focus();
+          return;
+        } else if ($("#passwd2").val() == "") {
+          alert('password check blank!');
+          $("#passwd2").focus();
+        }
+        else{
+          if($('#user_pw').val() == $('#passwd2').val()) {
+            $("#joinform").submit(); //정상일때 전송
+          } else {
+            $("#user_pw").val("");
+            $("#passwd2").val("");
+            $("#user_pw").focus();
+            alert('passwords are not same!');
+          }
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+<form action="/user/join" method="post" id="joinform">
+  <table width="400" border="0">
+    <tr>
+      <th width="100">id</th>
+      <td><input type="text" name="user_id" id="user_id" size="12" maxlength="12"></td>
+    </tr>
+    <tr>
+      <th>password</th>
+      <td><input type="password" name="user_pw" id="user_pw" size="12" maxlength="12"></td>
+    </tr>
+    <tr>
+      <th>password again</th>
+      <td><input type="password" id="passwd2" size="12" maxlength="12"></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input type="reset" value="cancel" >
+        <input type="button" id="btnjoin" value="sign in">
+      </td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>

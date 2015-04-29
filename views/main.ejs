@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css'/>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script>
+    $(function () {
+      $("#btnwithdraw").hide();
+      $("#withdraw_pw").hide();
+      $("#gowithdraw").click(function () {
+        $("#btnwithdraw").show();
+        $("#withdraw_pw").show();
+        $("#gowithdraw").hide();
+
+        $("#btnwithdraw").click(function () {
+          if ($('#withdraw_pw').val() == "") {
+            alert('비밀번호를 입력해주세요');
+            $("#withdraw_pw").focus();
+          } else {
+            $("#joinform").submit(); //정상일때 전송
+          }
+        });  //진짜 탈퇴하기 버튼
+      });  //탈퇴버튼 누르면 비밀번호 치는 창 나옴
+
+      $('#btnpost').click(function() {
+        if($('#post_title').val() == "") {
+          alert('write your title');
+          $('#post_title').focus();
+        } else if ($('#post_content').val == "") {
+          alert('write your post content!');
+          $('#post_content').focus();
+        } else {
+          $('#writeform').submit();
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+<h1>blog</h1>
+<% if(!user_id) { %>
+<form action="/user/login" method="post" id="joinform">
+  <input type="text" placeholder="id" size="12" name="user_id" id="user_id" style="float: left;">
+  <input type="password" placeholder="password" size="12" name="user_pw" id="user_pw" style="float: left;">
+  <input type="submit" value="로그인">
+  <a href="/user/join">sign in</a>
+</form>
+<% } else { %>
+<h2 style="float: left;">hi <%= user_id %>!</h2>
+<a href="/user/logout">로그아웃</a>
+
+<form action="/user/withdraw" method="post">
+  <input type="password" placeholder="password" id="withdraw_pw" size="12" name="withdraw_pw" style="float:left;">
+  <input type="button" value="탈퇴" id="gowithdraw" style="float:left;">
+  <input type="submit" id="btnwithdraw" value="탈퇴">
+</form>
+<br>
+
+<div style="float: none">
+  <form action="/post/write" method="post" id="writeform">
+    <input type="text" placeholder="title" id="post_title" size="100" name="post_title">
+    <input type="text" placeholder="fill out your post!" id="post_content" size="100" name="post_content">
+    <input type="submit" id="btnpost" value="write">
+  </form>
+</div>
+<% } %>
+
+<%
+for(var i = 0, len = data.length; i < len, item = data[i]; i++) {
+%>
+<% if ( i%2 == 1) {%>
+<tr>
+  <td width="5%"><%= max - i %></td>
+  <td width="55%"><a href="/board/read/<%=page%>/<%=item.num%>"><%= item.title %></a></td>
+  <td><%= item.id %></td>
+  <td width="25%"><%= item.regdate %></td>
+  <td width="5%"><%= item.hit %></td>
+</tr>
+<% } else { %>
+
+<% }
+} %>
+
+
+</body>
+</html>
